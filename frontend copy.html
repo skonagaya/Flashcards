@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>AJAX test</title>
+
+    <script src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+    // Load jQuery
+    google.load("jquery", "1"); 
+    </script>
+
+
+    <link rel="stylesheet" type="text/css" href="/css/reset_html5.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/flip_099.css"/>
+
+    <script src="/js/jquery-ui-1.7.2.custom.min.js"></script>
+    <script src="/js/jquery.flip.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            
+            $("#flipPad a:not(.revert)").bind("click",function(){
+                var $this = $(this);
+                $("#flipbox").flip({
+                    direction: $this.attr("rel"),
+                    color: $this.attr("rev"),
+                    content: $this.attr("title"),//(new Date()).getTime(),
+                    onBefore: function(){$(".revert").show()}
+                })
+                return false;
+            });
+            
+            $(".revert").bind("click",function(){
+                $("#flipbox").revertFlip();
+                return false;
+            });
+            
+            setTimeout(changeMailTo,500);
+            
+        });
+    </script>
+
+</head>
+<body>
+<script type="text/javascript">
+
+function xml_http_post(url, data, callback) {
+    var req = false;
+    try {
+        // Firefox, Opera 8.0+, Safari
+        req = new XMLHttpRequest();
+    }
+    catch (e) {
+        // Internet Explorer
+        try {
+            req = new ActiveXObject("Msxml2.XMLHTTP");
+        }
+        catch (e) {
+            try {
+                req = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            catch (e) {
+                alert("Your browser does not support AJAX!");
+                return false;
+            }
+        }
+    }
+    req.open("POST", url, true);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4) {
+            callback(req);
+        }
+    }
+    req.send(data);
+}
+
+function test_button() {
+    var data = document.test_form.test_text.value;           
+    xml_http_post("frontend.html", data, test_handle)
+}
+
+function test_handle(req) {
+    var elem = document.getElementById('test_result')
+    elem.innerHTML =  req.responseText
+}
+
+</script>
+
+<form name=test_form>
+sqr(<input type="text" name="test_text" value="0" size="4">) =<span id="test_result">0</span><input type=button onClick="test_button();" value="start" title="start">
+</form>
+
+    <div id="flipbox" style="margin:0 auto;" >Hello! I'm a flip-box! :)</div>
+    <div id="flipPad">
+        <a href="#" class="left" rel="rl" rev="#39AB3E" title="Change content as <em>you</em> like!">left</a>
+        <a href="#" class="top" rel="bt" rev="#B0EB17" title="Ohhh yeah!">top</a>
+        <a href="#" class="bottom" rel="tb" rev="#82BD2E" title="Hey oh let's go!">bottom</a>
+        <a href="#" class="right" rel="lr" rev="#C8D97E" title="Waiting for css3...">right</a>
+        <a href="#" class="revert">revert!</a>
+    </div>  
+
+</body>
+</html>

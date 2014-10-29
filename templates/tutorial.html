@@ -1,0 +1,204 @@
+<!doctype html>
+ 
+<html>
+ 
+    <head>
+        <title>Hello</title>
+
+        <script src="http://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+        // Load jQuery
+        google.load("jquery", "1"); 
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="/static/reset_html5.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/flip_099.css"/>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+        <script src="/static/jquery-ui-1.7.2.custom.min.js"></script>
+        <script src="/static/jquery.flip.min.js"></script>
+        <script src="/static/jquery.animate-shadow-min.js"></script>
+        <script src="/static/jquery.animate-shadow.js"></script>
+        <script src="/static/jquery.touchwipe.1.1.1.js"></script>
+        <script src="/static/jquery.touchwipe.min.js"></script>
+        <script type="text/javascript">
+            var translateLanguage = "JP";
+            var FLIP_DIRECTIONS = ["rl", "lr"];
+            var currectCard = null;
+            var answerRevealed = false;
+            var revertedFlipDirection = null;
+
+            function revertFlipDirection(flipDirection){
+                return flipDirection[1]+flipDirection[0];
+            }
+
+            function getNextCard(){
+
+                var flipBox = document.getElementById('flipbox');
+
+                $$("#flipbox").hide("slide", { direction: "left" }, 500, function() {
+                    jQuery.ajax({
+                            type: "POST",
+                            data: {cmd : "nextcard"},
+                            success: function(data) {
+                                currectCard = data;
+                                flipBox.innerHTML =  currectCard[translateLanguage];
+                                $$("#flipbox").show("slide", { direction: "right" }, 500, function() {
+                                    $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, "fast");
+                                });
+                            },
+                    });
+                });
+                return false;
+            }
+
+            function flipCard(direction){
+
+                if (answerRevealed) {
+                    $$("#flipbox").flip({
+                        direction: revertedFlipDirection,
+                        color: "#ffffff",
+                        speed: 100,
+                        content: currectCard[translateLanguage],//(new Date()).getTime(),
+                        onEnd: function () {
+                            $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, 'fast');
+                        }
+                    })
+                    $$("#flipbox").addClass('flashcardFront');
+                } else {
+                    var flipDirection = "";
+                    if (direction != null) {
+                        flipDirection = direction;
+                    } else {
+                        flipDirection = FLIP_DIRECTIONS[Math.floor(Math.random() * (FLIP_DIRECTIONS.length)) + 0];
+                    }
+                    revertedFlipDirection = revertFlipDirection(flipDirection);
+                    $$("#flipbox").flip({
+                        direction: flipDirection,
+                        color: "#ffffff",
+                        speed: 100,
+                        content: currectCard["KR"],//(new Date()).getTime(),
+                        onEnd: function () {
+                            $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, 'fast');
+                        }
+                    })
+                    $$("#flipbox").removeClass('flashcardFront');
+                }
+                answerRevealed = !answerRevealed;
+            }
+
+            $$(function(){
+
+                $$("#flipbox").addClass('flashcardFront');
+
+                $$("#flipbox").touchwipe({
+                     wipeLeft: function() { 
+
+                        if (!$$("#flipbox").is(':animated')) {
+                            if (answerRevealed){
+                                $$("#flipbox").flip({
+                                    direction: revertedFlipDirection,
+                                    color: "#ffffff",
+                                    speed: 100,
+                                    content: currectCard[translateLanguage],//(new Date()).getTime(),
+                                    onEnd: function () {
+                                        $$("#flipbox").addClass('flashcardFront');
+                                        $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, 'fast', function (){
+                                                $$("#flipbox").stop().animate({boxShadow: '0px 0px 0px 0px'}, "fast", function() {
+                                                    getNextCard();
+                                                });
+                                        });
+                                    }
+                                })
+                                answerRevealed = !answerRevealed;
+                            }
+                            else {
+                                $$("#flipbox").stop().animate({boxShadow: '0px 0px 0px 0px'}, "fast", function() {
+                                    getNextCard();
+                                });
+                            }
+                        }
+                     },
+                     wipeRight: function() { 
+                        if (!$$("#flipbox").is(':animated')) {
+                            flipCard("lr"); 
+                        }
+                    },
+
+                     wipeUp: function() { 
+                        if (!$$("#flipbox").is(':animated')) {
+                            flipCard("bt"); 
+                        }
+                    },
+                     wipeDown: function() { 
+                        if (!$$("#flipbox").is(':animated')) {
+                            flipCard("tb"); 
+                        }
+                    },
+                     min_move_x: 10,
+                     min_move_y: 10,
+                     preventDefaultEvents: true
+                });
+
+                document.getElementById("flipbox").onmousedown = function(event) {
+
+                    /* RIGHT CLICK == NEXT CARD */
+                    if (event.which == 1) {
+                        if (currectCard) {
+                            jQuery(this).stop().animate({boxShadow: '3px 3px 3px', top: 3}, 'fast');
+                        }
+                    }
+                    /* RIGHT CLICK == NEXT CARD */
+                    if (event.which == 3 && !$$("#flipbox").is(':animated')) {
+
+                        if (answerRevealed){
+                            $$("#flipbox").flip({
+                                direction: revertedFlipDirection,
+                                color: "#ffffff",
+                                speed: 100,
+                                content: currectCard[translateLanguage],//(new Date()).getTime(),
+                                onEnd: function () {
+                                    $$("#flipbox").addClass('flashcardFront');
+                                    $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, 'fast', function (){
+                                            $$("#flipbox").stop().animate({boxShadow: '0px 0px 0px 0px'}, "fast", function() {
+                                                getNextCard();
+                                            });
+                                    });
+                                }
+                            })
+                            answerRevealed = !answerRevealed;
+                        }
+                        else {
+                            $$("#flipbox").stop().animate({boxShadow: '0px 0px 0px 0px'}, "fast", function() {
+                                getNextCard();
+                            });
+                        }
+                    }
+                }
+
+                document.getElementById("flipbox").onmouseup = function(event) {
+                    if (event.which == 1) {
+
+                        if (currectCard != null) {
+                            flipCard();
+                        }
+                    }
+                }
+
+                $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'});
+            });
+
+        </script>
+    </head>
+     
+    <body oncontextmenu="return false;">
+
+        <div id="innerContainer">
+            <div class="languagePad">
+                <div class="myButton" title="en">EN</div>
+                <div class="myButton" title="jp">JP</div>
+            </div> 
+            <div id="flipbox">Hello! I'm a flip-box! :)</div>
+        </div>
+    </body>
+     
+</html>
