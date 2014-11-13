@@ -117,6 +117,11 @@
             content: none !important;
         }
 
+        #my-menu em,
+        #my-menu span {
+            font-size: 11px;
+        }
+
         .mm-toggle + span
         {
             margin-right: 120px !important;
@@ -219,6 +224,8 @@
                 var flipBox = document.getElementById('flipbox');
                 var fadeBar = document.getElementById('fadingBarsG');
 
+
+
                 jQuery.ajax({
                         type: "POST",
                         data: {
@@ -226,24 +233,26 @@
                             BLcard : card
                         },
                         success: function(data) {
-                            currentCard = data;
                             $$("#flipbox").show("slide", { direction: "right" }, 500, function() {
                                 $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, "fast");
                                 nextCardAnimating = false;
                                 //$$("#fadingBarsG").hide();
-                                fadeBar.style.top = "-"+screen.height+"px";
+                                fadeBar.style.top = "-"+screen.height*2+"px";
                             });
                         },
                 });
                 return false;
             }
 
-            function getNextCard(){
+            function getNextCard(isTrashing){
                 var flipBox = document.getElementById('flipbox');
                 var fadeBar = document.getElementById('fadingBarsG');
 
-                //$$("#fadingBarsG").show();
-                fadeBar.style.top = "0px";
+
+
+                if (!isTrashing) {
+                    fadeBar.style.top = "0";
+                }
 
 
                 $$("#flipbox").hide("slide", { direction: "left" }, 500, function() {
@@ -258,7 +267,7 @@
                                     nextCardAnimating = false;
 
                                     //$$("#fadingBarsG").hide();
-                                    fadeBar.style.top = "-"+screen.height+"px";
+                                    fadeBar.style.top = "-"+screen.height*2+"px";
                                 });
                             },
                     });
@@ -304,6 +313,7 @@
             function updateOrientation(){
 
                 if (isMobile){
+                    
 
                     var headerColor = "";
                     var cardWidth = "";
@@ -349,9 +359,9 @@
                 blackList[entry["KR"]] = entry;
 
                 var str  = '<li class="removing">';
-                    str += '<span>';
+                    str += '<span >';
                     str += '<a href="#" class="remove">x</a>';
-                    str += entry["KR"]
+                    str += entry["KR"].replace('[','<span class="pronounce">[').replace(']',']</span>')
                     str += '</span>';
                     str += '</li>';
 
@@ -372,8 +382,10 @@
                                     display: "block",
                                     opacity: 0
                                 }).slideUp(function() {
+                                    var pronounciation = $$(this).find("span span").text()
+                                    $$(this).find(".pronounce").remove()
                                     var blackListCardKR = $$(this).find("span").text().substr(1)
-                                    removeFromBlackList(blackList[blackListCardKR]);
+                                    removeFromBlackList(blackList[blackListCardKR + pronounciation]);
                                     delete blackList[blackListCardKR];
                                     $$(this).remove();
                                 });
@@ -467,6 +479,10 @@
                 $$('.toggle').toggles();
                 //MMENU
                 $$("#my-menu").mmenu({
+                    footer: {
+                        add: true,
+                        content: "(c) Konagaya 2014"
+                    },
                     slidingSubmenus: true,
                     classes     : 'mm-white'
                 }, {
@@ -512,7 +528,7 @@
                                         $$("#flipbox").addClass('flashcardFront');
                                         $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, 'fast', function (){
                                                 $$("#flipbox").stop().animate({boxShadow: '0px 0px 0px 0px'}, "fast", function() {
-                                                    getNextCard();
+                                                    getNextCard(false);
                                                 });
                                         });
                                     }
@@ -521,7 +537,7 @@
                             }
                             else {
                                 $$("#flipbox").stop().animate({boxShadow: '0px 0px 0px 0px'}, "fast", function() {
-                                    getNextCard();
+                                    getNextCard(false);
                                 });
                             }
                         }
@@ -562,6 +578,8 @@
                         if (mouseOnTrash){
                             var flipBox = document.getElementById('flipbox');
                             var fadeBar = document.getElementById('fadingBarsG');
+                            
+                            fadeBar.style.top = "-"+screen.height*2+"px";
 
                             nextCardAnimating = true;
                             sendBlackListEntry(currentCard);
@@ -585,7 +603,6 @@
 
 
 
-                                //$$("#fadingBarsG").show();
 
 
                                 jQuery.ajax({
@@ -603,7 +620,7 @@
                                 });
 
 
-                                getNextCard();
+                                getNextCard(true);
                             });
                                 
                         } else {
@@ -621,7 +638,7 @@
                                         $$("#flipbox").addClass('flashcardFront');
                                         $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, 'fast', function (){
                                                 $$("#flipbox").stop().animate({boxShadow: '0px 0px 0px 0px'}, "fast", function() {
-                                                    getNextCard();
+                                                    getNextCard(false);
                                                 });
                                         });
                                     }
@@ -630,7 +647,7 @@
                             }
                             else {
                                 $$("#flipbox").stop().animate({boxShadow: '0px 0px 0px 0px'}, "fast", function() {
-                                    getNextCard();
+                                    getNextCard(false);
                                 });
                             }
                         }
@@ -703,7 +720,7 @@
         <div id="page">
             <div id="header" class="header FixedTop">
                 <a href="#my-menu" ></a>
-                Flashcwards
+                FLASHCARDS?!
             </div>
             <div class="content">
             </div>

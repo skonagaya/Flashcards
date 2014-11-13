@@ -98,14 +98,12 @@ class tutorial:
 
 	def POST(self):
 		print "Received POST"
-		time.sleep(2)
 		web.header('Content-Type', 'application/json')
 		cmd = web.input()["cmd"]
 		if cmd:
 			if cmd == "nextcard":
 				result = json.dumps(getRandomCard(vocabList))
 				data = { 'dateTime':'asdf', 'random':'fdsa'} 
-				print result
 				return result
 			elif cmd == "getBlackList":
 				data = { 'dateTime':'asdf', 'random':'fdsa'} 
@@ -117,6 +115,7 @@ class tutorial:
 				whiteListCard(cardConverted)
 				return json.dumps("success");
 			elif cmd == "removeBL":
+				print web.input()
 				cardConverted = {web.input()["BLcard[EN]"]: {KR: web.input()["BLcard[KR]"], JP: web.input()["BLcard[JP]"]}}
 				removeWhiteListCard(cardConverted)
 				return json.dumps("success");
