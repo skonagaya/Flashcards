@@ -37,3 +37,115 @@
 애인 [ae-in] = lover, girlfriend or boyfriend = 恋人
 남자친구 [nam-ja-chin-gu] = boyfriend = ボーイフレンド
 차이다 [cha-i-da] = to be dumped = ふられる
+고 있다 [-go it-da] = to be -ing = ている
+고 있어요 [-go i-sseo-yo] = am/are/is -ing = ている
+저는 학생이에요. [jeo-neun hak-saeng-i-e-yo.] = I’m a student. = 私は学生です
+저는 선생님이에요. [jeo-neun seon-saeng-nim-i-e-yo.] = I’m a teacher. = 私は先生だよ
+저는 제임스예요. [jeo-neun je-im-seu-ye-yo.] = I’m James. = 私はジェームスです
+제 이름은 탈리아나예요. [je i-reum-eun tal-li-a-na-ye-yo.] = My name is Taliana. = 私の名前はイタリアやよ
+저는 30살이에요. [jeo-neun seo-reun-sal-i-e-yo.] = I am 30 years old. = 私は30歳です
+제 여동생 이름은 메구미치예요. [je yeo-dong-saeng i-reum-eun me-gu-mi-chi-ye-yo.] = My sister’s name is Megumitch. = 私の妹の名前は、Megumitchです
+저는 여동생이 있어요. [jeo-neun yeo-dong-saeng-i i-sseo-yo.] = I have a younger sister. = 私は妹がいます
+저는 취미가 수영이에요. [jeo-neun chwi-mi-ga su-yeong-i-e-yo.] = My hobby is swimming. = 私は趣味が水泳です
+저는 서울에 살아요. [jeo-neun seo-u-re sa-ra-yo.] = I live in Soeul = 私はソウルに住んでいます.
+저는 은행에서 일해요. [jeo-neun eun-haeng-e-seo il-hae-yo.] = I work in a bank. = 私は銀行で働いています
+저는 대학교에서 중국어를 가르쳐요. [jeo-neun dae-hak-gyo-e-seo jung-gu-geo-reul ga-reu-chyeo-yo] = I teach Chinese in college. = 私は大学で中国語を教えてよ
+저는 미국에서 태어났어요. [jeo-neun mi-gu-ge-seo tae-eo-na-sseo-yo.] = I was born in the USA = 私はアメリカで生まれました.
+
+나이 [na-i] = age = 年齢
+취미 [chwi-mi] = hobby = ホビー
+직장 [jik-jang] = workplace = 仕事
+직업 [ji-geop], 하는 일 [ha-neun il] = job = 職業
+사는 곳 [sa-neun got] = place of living = 住んでいるところ
+가족 [ga-jok] = family = 家族
+친척 [chin-cheok] = relatives, extended family = 親戚
+대학생 [dae-hak-saeng] = university student = 大学生
+고등학생 [go-deung-hak-saeng] = high school student = 高校生
+중학생 [jung-hak-saeng] = middle school student = 中学生
+초등학생 [cho-deung-hak-saeng] = elementary school student = 小学生
+처음 뵙겠습니다. [cheo-eum boep-ge-sseum-ni-da] = How do you do? = はじめまして
+반갑습니다. [ban-gap-seum-ni-da] = It’s nice to meet you. = はじめまして
+제 명함이에요. [je myeong-ham-i-e-yo] = It’s my business card. = 第名刺です
+이야기 많이 들었어요. [i-ya-gi ma-ni deu-reo-sseo-yo] = I’ve heard a lot about you. = 話をたくさん聞いた
+
+저도 학생이에요. [jeo-do hak-saeng-i-e-yo.] = I am a student, too. = 私も学生です
+이것도 가져왔어요. [i-geot-do ga-jyeo-wa-sseo-yo.] = I brought this, too. = これも持って来ました
+
+물도 주세요. [mul-do ju-se-yo.] = Give me water, too, please. = 水もください
+내일도 갈 거예요. [nae-il-do gal geo-ye-yo.] = I will go (again) tomorrow, too. = 明日も行くつもりです
+이것만 [i-geot-man] = only this = これだけ
+이것만 살 거예요. [i-geot-man sal geo-ye-yo] = I will only buy this. = これだけ買うんです
+저만 들었어요. [jeo-man deu-reo-sseo-yo] = Only I heard. = 私だけ聞いた
+아침에에 [a-chi-me] = at morning = 朝に
+아침에에는 커피만 마셔요. [a-chi-me-neun keo-pi-man ma-syeo-yo] = I only drink coffee in the morning. = 朝には、コーヒーだけを飲む
+듣다 [deut-da] = to hear, to listen = 聞く
+듣기만 하다 [deut-gi-man ha-da] = to only listen = 聞くだけである
+보기만 하다 [bo-ga-man ha-da] = to only see, to just look = 見るだけである
+오늘만 일찍 왔어요. [oneul-man il-jjik wa-sseo-yo] = I got here early only today. = 今日だけ早く来た
+맥주만 주문했어요. [maek-ju-man ju-mun-hae-sseo-yo] = I only ordered beer. = ビールだけ注文しました
+왜 이것만 샀어요? [wae i-geot-man sa-sseo-yo?] = Why did you only buy this? = なぜこれだけ買いました
+어제 놀기만 했어요. [eo-je nol-gi-man hae-sseo-yo] = I did nothing but played. = 어제 놀기만 했어요
+영화는 집에서만 봐요. [yeong-hwa-neun ji-be-seo-man bwa-yo.] = I watch movies only at home. = 映画は家だけで見てください
+
+조금 [jo-geum] = a little, a bit, a little bit = 少し
+조금 비싸요. [jo-geum bi-ssa-yo.] = It’s a little expensive. = 少し高価です
+조금만 주세요. [jo-geum-man ju-se-yo.] =  Give me only a little bit.　= 少しください
+정말 [jeong-mal] = really, truly = 本当に
+정말 빨라요. [jeong-mal ppal-la-yo.] = It’s really fast. = 本当に速い
+정말 이상해요. [jeong-mal i-sang-hae-yo.] = It’s really strange. = 本当に以上です
+아주 [a-ju]  = very, quite = 非常に
+아주 맛있어요. [a-ju ma-si-sseo-yo.] = It’s very delicious. = 非常においしいです
+아주 멀어요. [a-ju meo-reo-yo.] = It’s very far away. = 非常に遠い
+별로 [byeol-lo] = not really, not particularly = 別
+별로 안 비싸요. [byeol-lo an bi-ssa-yo.] = It’s not so expensive. = それはとても高価ではありません
+별로 재미없어요. [byeol-lo jae-mi-eop-seo-yo.] = It’s not that interesting. = あまり面白くありません
+별로 안 나빠요. [byeol-lo an na-ppa-yo.] = It’s not too bad. = あまり悪くない
+전혀 [jeon-hyeo] = not at all = 全く
+전혀 안 바빠요. [jeon-hyeo an ba-ppa-yo.] = I’m not busy at all. = 全くない忙しい
+전혀 안 더워요. [jeon-hyeo an deo-wo-yo.] = It’s not hot at all. = 全くない暑い
+볼 수 있다 [bol su it-da] = can see = 見ることができる
+먹을 수 있다 [meo-geul su it-da] = can eat = 食べることができます
+잘 수 있다 [jal su it-da] = can sleep = 眠ることができる
+잡을 수 있다 [ja-beul su it-da] = can catch = キャッチすることができます
+갈 수 없다 = 못 가다 [verb: 가다] = can not go = 行くことができない
+볼 수 없다 = 못 보다 [verb: 보다] = can not see = 見ることができない
+먹을 수 없다 = 못 먹다 [verb: 먹다] = can not eat = 食べることができない
+할 수 없다 = 못 하다 [verb: 하다] = can not do = することができない
+
+운전 할 수 있어요? [un-jeon hal su i-sseo-yo?] = Can you drive? = 運転することができますか?
+일본어 할 수 있어요? [il-bo-neo hal su i-sseo-yo?] = Can you speak Japanese? = 日本語できますか？
+이거 읽을 수 있어요? [i-geo il-geul su i-sseo-yo?] = Can you read this? = これを読むことができますか？
+
+수영 [su-yeong] = swimming = 水泳
+수영을 잘 하다 [su-yeong-eul jal ha-da] = to be good at swimming = 水泳をよくやる
+수영을 못 하다 [su-yeong-eul mot ha-da] = to be bad at swimming = 水泳をしないでやる
+수 영을 잘 못 하다 [su-yeong-eul jal mot ha-da] = to be bad at swimming = 数霊を非常によくないです
+저는 노래를 잘 못 해요. [jeo-neun no-rae-reul jal mot hae-yo.] = I can’t sing well. / I’m not good at singing. = 私は歌を得意じゃない
+제 친구는 수영을 잘 해요. [je chin-gu-neun su-yeong-eul jal hae-yo.] = My friend is good at swimming. = 私の友人は水泳をよくしている
+저는 퍼즐을 잘 풀어요. [jeo-neun peo-jeu-reul jal pu-reo-yo.] = I am good at solving puzzles. = 私はパズルをうまく回して
+저는 글씨를 잘 못 써요. [jeo-neun geul-ssi-reul jal mot sseo-yo.] = My handwriting is not good. = 私は字をよく釘書き
+저는 글을 잘 못 써요. [jeo-neun geu-reul jal mot sseo-yo.] = I’m not good at writing. = 私は文をよく書けない
+매운 거 잘 먹어요? [mae-un geo jal meo-geo-yo?] = Are you good at eating spicy food? = 辛いよく食べれる？
+
+가는 것 [ga-neun geot] = going, the act of going = 行くこと
+먹는 것 [meok-neun geot] = eating, the act of eating, the thing that you eat, what you eat = 食べるもの
+사는 것 [sa-neun geot] = buying, the act of buying, the thing that you buy, what you buy = 買いもの
+
+지금 듣는 것은 노래예요. [ ji-geum deut-neun geo-seun no-rae-ye-yo.] = What I am listening to now is a song. = 
+오늘 만나는 것 알아요? [o-neul man-na-neun geot a-ra-yo?] = Do you know that we are meeting today? = 
+매운 것 잘 먹어요? [mae-un geot jal meo-geo-yo?] = Are you good at eating spicy foods? = 
+제 취미는 영화 보는 거예요. [je chwi-mi-neun yeong-hwa bo-neun geo-ye-yo.] = My hobby is watching movies. = 私の趣味は映画を見るのです
+요즘 공부하는 거는 뭐예요? [yo-jeum gong-bu-ha-neun geo-neun mwo-ye-yo?] = What is it that you are studying recently? = 最近勉強している掛かる何ですか？
+저는 친구랑 수다떠는 거를 좋아해요. [jeo-neun chin-gu-rang su-da-tteo-neun geo-reul jo-a-hae-yo.] = I like chitchatting with my friends. = 私は、友達とおしゃべりつもりが好きです
+
+
+집에 가야 돼요. [ji-be ga-ya dwae-yo.] = I have to go home. = 家に行かなければならなりません
+저는 뭐 해야 돼요? [jeo-neun mwo hae-ya dwae-yo?] = What should I do? = 私は何が必要できますか？
+언제까지 여기에 있어야 돼요? [eon-je-kka-ji yeo-gi-e i-sseo-ya dwae-yo?] = Until when should I be here? = いつまでここにいる必要がありいいですか？
+누구한테 줘야 돼요? [nu-gu-han-te jwo-ya dwae-yo?] = Who should I give this to? = 誰に与えなければならなりません？
+어디에서 사야 돼요? [eo-di-e-seo sa-ya dwae-yo?] = Where should I buy it? = どこで買うのいいですか？
+
+
+to be big = 크다 [keu-da] = 大きい
+It’s bigger. = 더 커요. [deo keo-yo.] = より大きいです
+It’s bigger than this one. = 이거보다 더 커요. [i-geo-bo-da deo keo-yo.] = これよりも大きいです

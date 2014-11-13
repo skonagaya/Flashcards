@@ -1,13 +1,16 @@
-
-.clearfix:after {
-  content: ".";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+ margin: 0;
+ padding: 0;
+ border: 0;
+ font-size: 100%;
 }
+
+div, html, body{
+  height: 100%;
+}
+
 body {
-  background-color: #294F6D;
+  background-color: #FFAB1E;
   font-size: 67.5%;
   font-family: Helvetica, Tahoma, Verdana, sans-serif;
 
@@ -20,13 +23,129 @@ body {
   user-select: none;
 }
 
+
+
+html.mm-opened.mm-zoom-menu body
+{
+   background: #333;
+}
+html.mm-opened.mm-zoom-menu.mm-light body
+{
+  background: #f3f3f3;
+}
+html.mm-opened.mm-zoom-menu.mm-black body
+{
+  background: #000;
+}
+html.mm-opened.mm-zoom-menu.mm-white body
+{
+  background: #fff;
+}
+html.mm-opened.mm-zoom-menu .mm-page
+{
+  background-color: #fff;
+}
+
+.mm-menu li .fa
+{
+  margin: 0 20px 0 5px;
+  font-size: 16px;
+  width: 12px;
+}
+body.no-iconbar .mm-menu li .fa
+{
+  display: none !important;
+}
+body.no-buttonbars .mm-menu li.buttonbar-item
+{
+  display: none !important;
+}
+body.no-labels .mm-menu .mm-label,
+body.no-labels .mm-menu .mm-collapsed,
+.Collapsed
+{
+  display: none !important;
+}
+body.no-toggles .mm-menu li .mm-toggle
+{
+  display: none !important;
+}
+
+
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+
+
+.header,
+.content,
+.footer
+{
+  text-align: center;
+}
+.header,
+.footer
+{
+  background: #0E563B;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  line-height: 40px;
+  
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  
+  width: 100%;
+  height: 40px;
+  padding: 0 50px;
+}
+.header.mm-fixed-top
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.header a
+{
+  background: center center no-repeat transparent;
+  background-image: url( data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADhJREFUeNpi/P//PwOtARMDHQBdLGFBYtMq3BiHT3DRPU4YR4NrNAmPJuHRJDyahEeT8Ii3BCDAAF0WBj5Er5idAAAAAElFTkSuQmCC );
+
+  display: block;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  left: 10px;
+}
+.header a.contacts
+{
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAVNJREFUeNq01jFLAzEYxvH2UBCxiIiDUhzcdXCyIk5ufgUXLR37JdxcXBxcuwmOOtml0EKpo04iWIpIQREVEVFLjf9AhoC9e3O5uxd+lMLdPU1yedO8UiqXdQWO122ghi4+8IwGqiiId+uRCHbxqsLrFHNRz5ACSnhTch1EPScQpnIH0w7TWcGiz5rouS45rtkMVnxCJrAQ4yUq+oT8YhAjZOAT8oWHGCE9nxC9H64cA15w4xOiW0HbfErVNhvUa8c3cecQcoZv3xA9z+fCNbe4SNq7jvEUMaUnuE/au7SjkHbSR1G637ULh73Kn+gn7cIBttELGckQh9Jo8iMOrSksYx2b2MKk8FuvUUcHl/9GbiWuooYu3pVf/eARLZQxbp8na2YR0659e+HLmM/geN+z98lSRv8hZu2QQkYh+kzKjZkvHdPahymH6DNp5Cucev0JMAAkKj0NEoYBJwAAAABJRU5ErkJggg==);
+}
+.header a.right
+{
+  left: auto;
+  right: 10px;
+}
+
+
+
+
+
+
+
 .flashcardFront {
   background-image: url('/static/flashcard.png');
 }
 
 
 #flipbox {
-  position: relative;
+  position: absolute;
   width: 400px;
   height: 200px;
   line-height: 200px;
@@ -37,9 +156,16 @@ body {
   text-align: center;
 }
 
-.languagePad {
-
+#flipbox span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;     
 }
+
+.pronounce {
+  color: red;
+}
+
 
 .flashcardShadow {
   transition: box-shadow 400ms;
@@ -48,54 +174,41 @@ body {
   box-shadow: 14px 14px 23px 0px rgba(0,0,0,0.75);
 }
 
+
 #innerContainer {
-    position:    absolute;
-    left:        50%;        /* Start with top left in the center */
-    top:         50%;
-    width:       400px;      /* The fixed width... */
-    height:      250px;      /* ...and height */
-    margin-left: -200px;     /* Shift over half the width */
-    margin-top:  -125px;      /* Shift up half the height */
+  position:    absolute;
+  left:        50%;        /* Start with top left in the center */
+  top:         50%;
+  width:       400px;      /* The fixed width... */
+  height:      200px;      /* ...and height */
+  margin-left: -200px;     /* Shift over half the width */
+  margin-top:  -100px;      /* Shift up half the height */
 }
-.myButton {
-  -moz-box-shadow:inset 0px 0px 15px 3px #23395e;
-  -webkit-box-shadow:inset 0px 0px 15px 3px #23395e;
-  box-shadow:inset 0px 0px 15px 3px #23395e;
-  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #2e466e), color-stop(1, #415989));
-  background:-moz-linear-gradient(top, #2e466e 5%, #415989 100%);
-  background:-webkit-linear-gradient(top, #2e466e 5%, #415989 100%);
-  background:-o-linear-gradient(top, #2e466e 5%, #415989 100%);
-  background:-ms-linear-gradient(top, #2e466e 5%, #415989 100%);
-  background:linear-gradient(to bottom, #2e466e 5%, #415989 100%);
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#2e466e', endColorstr='#415989',GradientType=0);
-  background-color:#2e466e;
-  -moz-border-radius:17px;
-  -webkit-border-radius:17px;
-  border-radius:17px;
-  border:1px solid #374c6b;
-  display:inline-block;
-  cursor:pointer;
-  color:#ffffff;
-  font-family:arial;
-  font-size:15px;
-  padding:6px 13px;
-  text-decoration:none;
-  text-shadow:0px 1px 0px #263666;
-  text-align: left;
-  width: 20px;
-  height: 20px;
+
+.toggleFix {
+  margin: 22x auto; 
+  height: 30px;
+  width: 90px;
+  text-align: center;
+  font-family: sans-serif;
 }
-.myButton:hover {
-  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #415989), color-stop(1, #2e466e));
-  background:-moz-linear-gradient(top, #415989 5%, #2e466e 100%);
-  background:-webkit-linear-gradient(top, #415989 5%, #2e466e 100%);
-  background:-o-linear-gradient(top, #415989 5%, #2e466e 100%);
-  background:-ms-linear-gradient(top, #415989 5%, #2e466e 100%);
-  background:linear-gradient(to bottom, #415989 5%, #2e466e 100%);
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#415989', endColorstr='#2e466e',GradientType=0);
-  background-color:#415989;
+
+.toggleFont {
+  font: inherit;
+  font-size: 14px;
+  line-height: 14px;
+  margin-top: -10px;
+  position: absolute;
+  left: 80px;
+  top: 50%;
 }
-.myButton:active {
-  position:relative;
-  top:1px;
+
+.settingFont {
+  font: inherit;
+  font-size: 14px;
+  line-height: 14px;
+  margin-top: -10px;
+  position: absolute;
+  top: 50%;
+  height: 50px;
 }

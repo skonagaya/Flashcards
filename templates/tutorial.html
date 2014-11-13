@@ -5,14 +5,141 @@
     <head>
         <title>Hello</title>
 
+<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes" />
+
         <script src="https://www.google.com/jsapi"></script>
         <script type="text/javascript">
         // Load jQuery
         google.load("jquery", "1"); 
         </script>
 
-        <link rel="stylesheet" type="text/css" href="/static/reset_html5.css"/>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+        <link href="/static/jquery.mmenu.all.css" type="text/css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="/static/flip_099.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/loading.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/toggles.css"/>
+        <style type="text/css">
+        .mm-menu li.img:after
+        {
+            margin-left: 80px !important;
+        }
+        .mm-menu li.img a
+        {
+            font-size: 16px;
+        }
+        .mm-menu li.img a:hover
+        {
+            font-size: 20px;
+        }
+        .mm-menu li.img a:active
+        {
+            font-size: 22px;
+        }
+        .mm-menu li.img a.selected
+        {
+            font-size: 24px;
+        }
+        .mm-menu li.img a img
+        {
+            float: left;
+            margin: -5px 10px -5px 0;
+            border-radius: 100px;
+        }
+        .mm-menu li.img a small
+        {
+            font-size: 12px;
+        }
+        .Header,
+        .Prev,
+        .Next
+        {
+            display: none;
+        }
+        .wrapper
+        {
+            padding-bottom: 0 !important;
+        }
+        .top
+        {
+            height: 33%;
+            box-sizing: border-box;
+        }
+        .bottom
+        {
+            -webkit-overflow-scrolling: touch;
+            height: 67%;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            margin: 0 -20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .bottom > .mm-list
+        {
+            padding-top: 0;
+        }
+        .bottom .mm-counter
+        {
+            right: 85px;
+        }
+        a.remove
+        {
+            background: red;
+            border-radius: 20px;
+            color: #fff;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 19px;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin: 0 30px 0 -50px;
+            
+            -webkit-transition: margin .5s ease;
+            transition: margin .5s ease;
+        }
+        .removing a.remove
+        {
+            margin: 0 10px 0 0;
+        }
+        .mm-header
+        {
+            background: #f90 !important;
+            color: #fff !important;
+        }
+        a.mm-prev,
+        a.mm-next
+        {
+            color: inherit;
+        }
+        a.mm-prev:before,
+        a.mm-next:after
+        {
+            content: none !important;
+        }
+
+        .mm-toggle + span
+        {
+            margin-right: 120px !important;
+        }
+        label
+        {
+            display: block;
+            margin-bottom: 10px;
+        }
+        select
+        {
+            width: 45%;
+            float: left;
+        }
+        select + select
+        {
+            float: right;
+        }
+        #menu {
+            width: 100%;
+            height: 100%;
+        }
+        </style>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
         <script src="/static/jquery-ui-1.7.2.custom.min.js"></script>
         <script src="/static/jquery.flip.min.js"></script>
@@ -20,30 +147,118 @@
         <script src="/static/jquery.animate-shadow.js"></script>
         <script src="/static/jquery.touchwipe.1.1.1.js"></script>
         <script src="/static/jquery.touchwipe.min.js"></script>
+        <script src="/static/toggles-min.js"></script>
+        <script src="/static/jquery.ddslick.min.js"></script>
+        <script src="/static/jquery.mmenu.min.all.js" type="text/javascript"></script>
         <script type="text/javascript">
-            var translateLanguage = "JP";
+
+            var ddData = [
+                {
+                    text: "",
+                    value: "EN",
+                    description: " ",
+                    imageSrc: "/static/EN-g.png"
+                },
+                {
+                    text: "",
+                    value: "JP",
+                    description: " ",
+                    imageSrc: "/static/JP-g.png"
+                },
+                {
+                    text: "",
+                    value: "KR",
+                    description: " ",
+                    imageSrc: "/static/KR-g.png"
+                }
+            ];
+
+            var frontLang = "";
+            var backLang = "";
+            var blackList = {};
+            var translateLanguage = "EN";
             var FLIP_DIRECTIONS = ["rl", "lr"];
-            var currectCard = null;
+            var currentCard = null;
             var answerRevealed = false;
             var revertedFlipDirection = null;
+            var nextCardAnimating = false;
+            var flipCardAnimating = false;
+            var isMobile = false;
+            var trashHTML = '<img src="/static/smalltrash.png" id="trash" style="position:absolute;z-index:6;float:left;left:0px;top:0px;"/>';
 
             function revertFlipDirection(flipDirection){
                 return flipDirection[1]+flipDirection[0];
             }
 
-            function getNextCard(){
+            function initBlackList(){
+                jQuery.ajax({
+                        type: "POST",
+                        data: {cmd : "getBlackList"},
+                        success: function(data) {
+                            //alert(JSON.stringify(data));
+                            for (i=0;i<data.length;i++) {
+                                addToBlackList(data[i]);
+                            }
+                        },
+                });
+            }
 
+            function removeFromBlackList(card){
+                jQuery.ajax({
+                        type: "POST",
+                        data: {cmd : "removeBL",
+                        BLcard : card 
+                    },
+                    success: function(data) {
+
+                    },
+                });
+            }
+
+            function sendBlackListEntry(card){
                 var flipBox = document.getElementById('flipbox');
+                var fadeBar = document.getElementById('fadingBarsG');
+
+                jQuery.ajax({
+                        type: "POST",
+                        data: {
+                            cmd : "addBL",
+                            BLcard : card
+                        },
+                        success: function(data) {
+                            currentCard = data;
+                            $$("#flipbox").show("slide", { direction: "right" }, 500, function() {
+                                $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, "fast");
+                                nextCardAnimating = false;
+                                //$$("#fadingBarsG").hide();
+                                fadeBar.style.top = "-"+screen.height+"px";
+                            });
+                        },
+                });
+                return false;
+            }
+
+            function getNextCard(){
+                var flipBox = document.getElementById('flipbox');
+                var fadeBar = document.getElementById('fadingBarsG');
+
+                //$$("#fadingBarsG").show();
+                fadeBar.style.top = "0px";
+
 
                 $$("#flipbox").hide("slide", { direction: "left" }, 500, function() {
                     jQuery.ajax({
                             type: "POST",
                             data: {cmd : "nextcard"},
                             success: function(data) {
-                                currectCard = data;
-                                flipBox.innerHTML =  currectCard[translateLanguage];
+                                currentCard = data;
+                                flipBox.innerHTML =  "<span>" + currentCard[frontLang].replace('[','<span class="pronounce">[').replace(']',']</span>')  + "</span>" + trashHTML;
                                 $$("#flipbox").show("slide", { direction: "right" }, 500, function() {
                                     $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, "fast");
+                                    nextCardAnimating = false;
+
+                                    //$$("#fadingBarsG").hide();
+                                    fadeBar.style.top = "-"+screen.height+"px";
                                 });
                             },
                     });
@@ -58,7 +273,7 @@
                         direction: revertedFlipDirection,
                         color: "#ffffff",
                         speed: 100,
-                        content: currectCard[translateLanguage],//(new Date()).getTime(),
+                        content: "<span>" + currentCard[frontLang].replace('[','<span class="pronounce">[').replace(']',']</span>')  + "</span>" + trashHTML,//(new Date()).getTime(),
                         onEnd: function () {
                             $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, 'fast');
                         }
@@ -76,7 +291,7 @@
                         direction: flipDirection,
                         color: "#ffffff",
                         speed: 100,
-                        content: currectCard["KR"],//(new Date()).getTime(),
+                        content: "<span>" + currentCard[backLang].replace('[','<span class="pronounce">[').replace(']',']</span>')  + "</span>",
                         onEnd: function () {
                             $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, 'fast');
                         }
@@ -86,9 +301,202 @@
                 answerRevealed = !answerRevealed;
             }
 
+            function updateOrientation(){
+
+                if (isMobile){
+
+                    var headerColor = "";
+                    var cardWidth = "";
+                    var cardHeight = "";
+
+                    switch(window.orientation) {
+                        case 0: 
+                        case 180:
+                            headerColor = "#0E563B";
+                            cardWidth = screen.width;
+                            cardHeight = screen.width / 2;
+                            break;
+         
+                        case -90:
+                        case 90:
+                            headerColor = "#294F6D";
+                            cardWidth = screen.height;
+                            cardHeight = screen.height / 2;
+                            break;
+         
+                    }
+                    document.getElementById('flipbox').style.width=             cardWidth + "px";
+                    document.getElementById('flipbox').style.height=            cardHeight + "px";
+                    document.getElementById('flipbox').style.lineHeight=        cardHeight + "px";
+                    document.getElementById('innerContainer').style.width=      cardWidth + "px";
+                    document.getElementById('innerContainer').style.height=     cardHeight + "px";
+                    document.getElementById('innerContainer').style.marginLeft= "-" + cardWidth/2 + "px";
+                    document.getElementById('innerContainer').style.marginTop=  "-" + cardHeight/2 + "px";
+                    document.getElementById('header').style.backgroundColor=    headerColor;
+                }
+            }
+
+            function startup(){
+                updateOrientation();
+                initBlackList();
+            }
+
+            function renderBlackList(){
+
+            }
+
+            function addToBlackList(entry){
+                blackList[entry["KR"]] = entry;
+
+                var str  = '<li class="removing">';
+                    str += '<span>';
+                    str += '<a href="#" class="remove">x</a>';
+                    str += entry["KR"]
+                    str += '</span>';
+                    str += '</li>';
+
+                $$('#blackListContainer').append( str );
+            }
+
             $$(function(){
 
+
+                $$('#blackListContainer')
+                    .on( 'click',
+                        '.remove',
+                        function( e )
+                        {
+                            e.preventDefault();
+                            $$(this).closest( 'li' ).fadeOut(function() { 
+                                $$(this).css({
+                                    display: "block",
+                                    opacity: 0
+                                }).slideUp(function() {
+                                    var blackListCardKR = $$(this).find("span").text().substr(1)
+                                    removeFromBlackList(blackList[blackListCardKR]);
+                                    delete blackList[blackListCardKR];
+                                    $$(this).remove();
+                                });
+                            });
+                        }
+                    );
+
+                $$('#frontCardDrop').ddslick({
+                    data:ddData,
+                    width:90,
+                    selectText: "Select your preferred social network",
+                    imagePosition:"right",
+                    defaultSelectedIndex:0,
+                    onSelected: function(selectedData){
+                        frontLang = selectedData.selectedData.value;
+
+                        if (currentCard){
+
+                            var sideLang = answerRevealed ? backLang : frontLang;
+
+                            $$("#flipbox").flip({
+                                direction: revertedFlipDirection,
+                                color: "#ffffff",
+                                speed: 100,
+                                content: "<span>" + currentCard[sideLang].replace('[','<span class="pronounce">[').replace(']',']</span>') + "</span>" + trashHTML,//(new Date()).getTime(),
+                                onEnd: function () {
+                                    $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, 'fast');
+                                }
+                            })
+                        }
+                    }   
+                });
+
+                $$('#backCardDrop').ddslick({
+                    data:ddData,
+                    width:90,
+                    selectText: "Select your preferred social network",
+                    imagePosition:"right",
+                    defaultSelectedIndex:2,
+                    onSelected: function(selectedData){
+                        backLang = selectedData.selectedData.value;
+
+                        if (currentCard){
+
+                            var sideLang = answerRevealed ? backLang : frontLang;
+
+                            $$("#flipbox").flip({
+                                direction: revertedFlipDirection,
+                                color: "#ffffff",
+                                speed: 100,
+                                content: "<span>" + currentCard[sideLang].replace('[','<span class="pronounce">[').replace(']',']</span>')  + "</span>" + trashHTML,//(new Date()).getTime(),
+                                onEnd: function () {
+                                    $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, 'fast');
+                                }
+                            })
+                        }
+                    }   
+                });
+                document.getElementById('frontCardDrop').style.height="52px";
+                document.getElementById('frontCardDrop').style.right="10px";
+                document.getElementById('frontCardDrop').style.zIndex="5";
+                document.getElementById('frontCardDrop').style.position="absolute";
+                document.getElementById('frontCardDrop').style.padding="0";
+                document.getElementById('frontCardDrop').style.color="black";
+                document.getElementById('frontCardDrop').style.fontSize="80%";
+
+                document.getElementById('backCardDrop').style.height="52px";
+                document.getElementById('backCardDrop').style.right="10px";
+                document.getElementById('backCardDrop').style.zIndex="4";
+                document.getElementById('backCardDrop').style.position="absolute";
+                document.getElementById('backCardDrop').style.padding="0";
+                document.getElementById('backCardDrop').style.color="black";
+                document.getElementById('backCardDrop').style.fontSize="80%";
+
+                $$('#trash').click(function(){
+                });
+
+                $$('a[href="#"]').click(function(){
+                    $$(this).addClass("selected");
+                });
+
+                if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+                    isMobile = true;
+                }
+
+                $$( window ).on( "orientationchange", function( event ) {
+                    updateOrientation();
+                    //updateCardSize();
+                });
+
+                $$('.toggle').toggles();
+                //MMENU
+                $$("#my-menu").mmenu({
+                    slidingSubmenus: true,
+                    classes     : 'mm-white'
+                }, {
+                // configuration
+                    classNames: {
+                        selected: "active"
+                    },
+                    offCanvas: {
+                        //pageNodetype: "section"
+                    }
+                });
+
+                $$("#pronounceToggle").click(function(){
+                    if ($$(this).prop('checked'))
+                    {
+                        $$(".pronounce").show();
+
+                    }else {
+                        $$(".pronounce").hide();
+                    }
+                });
+
+                $$("#my-button").click(function() {
+                    $$("#my-menu").trigger("open.mm");
+                });
+                $$('#frontCardDrop').find("*").removeClass('mm-list');
+                $$('#backCardDrop').find("*").removeClass('mm-list');
+
                 $$("#flipbox").addClass('flashcardFront');
+
 
                 $$("#flipbox").touchwipe({
                      wipeLeft: function() { 
@@ -99,7 +507,7 @@
                                     direction: revertedFlipDirection,
                                     color: "#ffffff",
                                     speed: 100,
-                                    content: currectCard[translateLanguage],//(new Date()).getTime(),
+                                    content: "<span>" + currentCard[frontLang].replace('[','<span class="pronounce">[').replace(']',']</span>')  + "</span>",
                                     onEnd: function () {
                                         $$("#flipbox").addClass('flashcardFront');
                                         $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, 'fast', function (){
@@ -141,44 +549,103 @@
 
                 document.getElementById("flipbox").onmousedown = function(event) {
 
+                    var mouseOnTrash = $$("#trash:hover").length > 0;
+
                     /* RIGHT CLICK == NEXT CARD */
-                    if (event.which == 1) {
-                        if (currectCard) {
+                    if (event.which == 1 && !nextCardAnimating) {
+                        if (currentCard) {
                             jQuery(this).stop().animate({boxShadow: '3px 3px 3px', top: 3}, 'fast');
                         }
                     }
                     /* RIGHT CLICK == NEXT CARD */
-                    if (event.which == 3 && !$$("#flipbox").is(':animated')) {
+                    if (event.which == 3 && !nextCardAnimating || mouseOnTrash) {
+                        if (mouseOnTrash){
+                            var flipBox = document.getElementById('flipbox');
+                            var fadeBar = document.getElementById('fadingBarsG');
 
-                        if (answerRevealed){
-                            $$("#flipbox").flip({
-                                direction: revertedFlipDirection,
-                                color: "#ffffff",
-                                speed: 100,
-                                content: currectCard[translateLanguage],//(new Date()).getTime(),
-                                onEnd: function () {
-                                    $$("#flipbox").addClass('flashcardFront');
-                                    $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, 'fast', function (){
-                                            $$("#flipbox").stop().animate({boxShadow: '0px 0px 0px 0px'}, "fast", function() {
-                                                getNextCard();
+                            nextCardAnimating = true;
+                            sendBlackListEntry(currentCard);
+                            var preHeight   = $$("#flipbox").css("height");
+                            var preWidth    = $$("#flipbox").css("width");
+                            var preTop      = $$("#flipbox").css("top");
+                            var preLeft     = $$("#flipbox").css("left");
+                            $$("#flipbox").animate({
+                                height: 0,
+                                width: 0,
+                                top: 0,
+                                left: 0
+                            }, 600, function(){
+                                addToBlackList(currentCard);
+                                $$("#flipbox").css("height", preHeight);
+                                $$("#flipbox").css("width", preWidth);
+                                $$("#flipbox").css("top", preTop);
+                                $$("#flipbox").css("left", preLeft);
+                                //$$(this).hide();
+                                $$("#flipbox").hide();
+
+
+
+                                //$$("#fadingBarsG").show();
+
+
+                                jQuery.ajax({
+                                        type: "POST",
+                                        data: {cmd : "nextcard"},
+                                        success: function(data) {
+                                            currentCard = data;
+                                            flipBox.innerHTML =  "<span>" + currentCard[frontLang].replace('[','<span class="pronounce">[').replace(']',']</span>')  + "</span>" + trashHTML;
+                                            $$("#flipbox").show("slide", { direction: "right" }, 500, function() {
+                                                $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, "fast");
+                                                nextCardAnimating = false;
+                                                //$$("#fadingBarsG").hide();
                                             });
-                                    });
-                                }
-                            })
-                            answerRevealed = !answerRevealed;
-                        }
-                        else {
-                            $$("#flipbox").stop().animate({boxShadow: '0px 0px 0px 0px'}, "fast", function() {
+                                        },
+                                });
+
+
                                 getNextCard();
                             });
+                                
+                        } else {
+
+
+                            nextCardAnimating = true;
+
+                            if (answerRevealed){
+                                $$("#flipbox").flip({
+                                    direction: revertedFlipDirection,
+                                    color: "#ffffff",
+                                    speed: 100,
+                                    content: "<span>" + currentCard[frontLang] + "</span>",
+                                    onEnd: function () {
+                                        $$("#flipbox").addClass('flashcardFront');
+                                        $$("#flipbox").stop().animate({boxShadow: '14px 14px 30px 0px'}, 'fast', function (){
+                                                $$("#flipbox").stop().animate({boxShadow: '0px 0px 0px 0px'}, "fast", function() {
+                                                    getNextCard();
+                                                });
+                                        });
+                                    }
+                                })
+                                answerRevealed = !answerRevealed;
+                            }
+                            else {
+                                $$("#flipbox").stop().animate({boxShadow: '0px 0px 0px 0px'}, "fast", function() {
+                                    getNextCard();
+                                });
+                            }
                         }
                     }
                 }
 
                 document.getElementById("flipbox").onmouseup = function(event) {
-                    if (event.which == 1) {
 
-                        if (currectCard != null) {
+                    var mouseOnTrash = $$("#trash:hover").length > 0;
+
+                    if (event.which == 1 && !nextCardAnimating && !mouseOnTrash) {
+
+                        if (mouseOnTrash) {
+                            addToBlackList(currentCard);
+                        } else if (currentCard != null) {
                             flipCard();
                         }
                     }
@@ -190,15 +657,75 @@
         </script>
     </head>
      
-    <body oncontextmenu="return false;">
+    <body oncontextmenu="return false;" onload="startup()">
 
-        <div id="innerContainer">
-            <div class="languagePad">
-                <div class="myButton" title="en">EN</div>
-                <div class="myButton" title="jp">JP</div>
-            </div> 
-            <div id="flipbox">Hello! I'm a flip-box! :)</div>
+
+        <nav id="my-menu">
+            <ul>
+                <li>
+                    <span>Settings</span>
+                    <ul>
+                        <li>
+                        <span>Language Selection</span>
+                        <ul >
+                            <li>
+                            <span>
+                                <em class="settingFont" >Front of Card</em>
+                                <div style="height:60px;"><div id="frontCardDrop" /></div>
+
+                            </span>
+                            </li>
+                            <li>
+                            <span>
+                                <em class="settingFont" >Back of Card</em>
+                                <div style="height:60px;"><div id="backCardDrop" /></div>
+                            </span>
+                            </li>
+                        </ul>
+
+                        <li>
+                            <input id="pronounceToggle" type="checkbox" checked class="Toggle" />
+                            <span>
+                                Show pronounciation
+                            </span>
+                        </li>
+                        </li>
+                   </ul>
+                </li>
+                <li >
+                    <span >Blacklist</span>
+                    <ul id="blackListContainer">
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="page">
+            <div id="header" class="header FixedTop">
+                <a href="#my-menu" ></a>
+                Flashcwards
+            </div>
+            <div class="content">
+            </div>
         </div>
+
+
+        <div id="fadingBarsG">
+            <div id="fadingBarsG_1" class="fadingBarsG"></div>
+            <div id="fadingBarsG_2" class="fadingBarsG"></div>
+            <div id="fadingBarsG_3" class="fadingBarsG"></div>
+            <div id="fadingBarsG_4" class="fadingBarsG"></div>
+            <div id="fadingBarsG_5" class="fadingBarsG"></div>
+            <div id="fadingBarsG_6" class="fadingBarsG"></div>
+            <div id="fadingBarsG_7" class="fadingBarsG"></div>
+            <div id="fadingBarsG_8" class="fadingBarsG"></div>
+        </div>
+
+        <div id="innerContainer" >
+            
+            <div id="flipbox"></div>
+        </div>
+
     </body>
      
 </html>
